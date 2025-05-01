@@ -309,4 +309,22 @@ h2 {
     border-bottom: 1px solid rgba(0,0,0,0.1);
     margin-bottom: 2rem;
   }
+}
+
+/* Fix for title-block-header */
+#title-block-header {
+  margin-block-end: 1rem;
+  margin-top: 2rem;
+  border-bottom: none !important;
+}
+
+#title-block-header::after {
+  content: none !important;
+  display: none !important;
+  height: 0 !important;
+  border: none !important;
+}
+
+.title {
+  border-bottom: none !important;
 } 

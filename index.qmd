@@ -188,5 +188,5 @@ We welcome new community submissions! To add your community:
 2. Fill in your community details
 3. Our team will review and add your community to the database
 
-For more details, see our [Contribution Guidelines](CONTRIBUTING.md).
+For more details, see our [Contribution Guidelines](contributing.html).
 :::

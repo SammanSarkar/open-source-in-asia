@@ -4,6 +4,7 @@ project:
   render:
     - "*.qmd"
     - "!templates/"
+    - "contributing.qmd"
   preview:
     port: 4200
     browser: true
