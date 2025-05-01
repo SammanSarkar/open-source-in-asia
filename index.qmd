@@ -16,6 +16,29 @@ library(leaflet)
 
 # Read communities data
 communities <- read_csv("data/communities.csv")
+
+# Define region coordinates
+region_coords <- tribble(
+  ~region, ~lat, ~lng, ~color,
+  "East Asia", 35.0, 115.0, "red",
+  "Southeast Asia", 10.0, 106.0, "blue",
+  "South Asia", 23.0, 80.0, "green",
+  "Central Asia", 45.0, 68.0, "purple"
+)
+
+# Create popup content for each region
+region_data <- communities %>%
+  group_by(region) %>%
+  summarise(
+    community_count = n(),
+    community_list = paste(
+      paste0("<b>", name, "</b><br>",
+             description, "<br>",
+             "<a href='", website, "' target='_blank'>Website</a>"),
+      collapse = "<br><br>"
+    )
+  ) %>%
+  left_join(region_coords, by = "region")
 ```
 
 # Welcome to Asian Open Source Communities
@@ -42,10 +65,33 @@ datatable(
 ```{r}
 #| label: map
 #| output: html
-# Note: This is a placeholder. You'll need to add geocoding data to make this work
 leaflet() %>%
   addTiles() %>%
-  setView(lng = 100, lat = 20, zoom = 3)
+  setView(lng = 100, lat = 25, zoom = 4) %>%
+  addCircleMarkers(
+    data = region_data,
+    lng = ~lng,
+    lat = ~lat,
+    color = ~color,
+    radius = ~sqrt(community_count) * 10,
+    fillOpacity = 0.6,
+    stroke = TRUE,
+    weight = 2,
+    popup = ~paste0(
+      "<h4>", region, "</h4>",
+      "<p><b>", community_count, " communities</b></p>",
+      "<div style='max-height: 200px; overflow-y: auto;'>",
+      community_list,
+      "</div>"
+    )
+  ) %>%
+  addLegend(
+    position = "bottomright",
+    colors = region_coords$color,
+    labels = region_coords$region,
+    title = "Regions",
+    opacity = 0.7
+  )
 ```
 
 ## How to Contribute
