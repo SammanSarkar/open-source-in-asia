@@ -15,6 +15,10 @@ library(DT)
 
 # Read communities data
 communities <- read_csv("../data/communities.csv")
+
+# Select only the columns we want to display
+display_communities <- communities %>%
+  select(name, description, website, region, category)
 ```
 
 ## Community Directory
@@ -23,11 +27,19 @@ communities <- read_csv("../data/communities.csv")
 #| label: datatable
 #| output: html
 datatable(
-  communities,
+  display_communities,
   filter = 'top',
   options = list(
     pageLength = 10,
-    autoWidth = TRUE
+    autoWidth = FALSE,
+    scrollX = FALSE,
+    columnDefs = list(
+      list(width = '20%', targets = 0),  # name
+      list(width = '35%', targets = 1),  # description
+      list(width = '15%', targets = 2),  # website
+      list(width = '15%', targets = 3),  # region
+      list(width = '15%', targets = 4)   # category
+    )
   )
 )
 ```

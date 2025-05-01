@@ -1,5 +1,5 @@
 ---
-title: "Asian Open Source Communities"
+title: "Open Source Communities in Asia"
 format: html
 execute:
   echo: false
@@ -17,66 +17,132 @@ library(leaflet)
 # Read communities data
 communities <- read_csv("data/communities.csv")
 
-# Define region coordinates
+# Select display columns
+display_communities <- communities %>%
+  select(name, description, website, region, category)
+
+# Define region coordinates with adjusted positions
 region_coords <- tribble(
   ~region, ~lat, ~lng, ~color,
-  "East Asia", 35.0, 115.0, "red",
-  "Southeast Asia", 10.0, 106.0, "blue",
-  "South Asia", 23.0, 80.0, "green",
-  "Central Asia", 45.0, 68.0, "purple"
+  "Eastern Asia", 35.0, 115.0, "#e74c3c",  # Red
+  "South-Eastern Asia", 10.0, 106.0, "#3498db",  # Blue
+  "Southern Asia", 23.0, 80.0, "#2ecc71",  # Green
+  "Western Asia", 35.0, 40.0, "#9b59b6",  # Purple
+  "Central Asia", 45.0, 68.0, "#f1c40f"   # Yellow
 )
 
-# Create popup content for each region
+# Create a geocoding function (simplified for major cities)
+get_coords <- function(city, country) {
+  coords <- list(
+    "New Delhi" = c(28.6139, 77.2090),
+    "Mumbai" = c(19.0760, 72.8777),
+    "Bangalore" = c(12.9716, 77.5946),
+    "Tokyo" = c(35.6762, 139.6503),
+    "Singapore" = c(1.3521, 103.8198),
+    "Seoul" = c(37.5665, 126.9780),
+    "Hong Kong" = c(22.3193, 114.1694),
+    "Dubai" = c(25.2048, 55.2708),
+    "Taipei" = c(25.0330, 121.5654),
+    "Kolkata" = c(22.5726, 88.3639),
+    "Hyderabad" = c(17.3850, 78.4867),
+    "Chennai" = c(13.0827, 80.2707),
+    "Pune" = c(18.5204, 73.8567),
+    "Ahmedabad" = c(23.0225, 72.5714),
+    "Kochi" = c(9.9312, 76.2673),
+    "Lahore" = c(31.5204, 74.3587),
+    "Islamabad" = c(33.6007, 73.0679),
+    "Kathmandu" = c(27.7172, 85.3240),
+    "Abu Dhabi" = c(24.4539, 54.3773),
+    "Jakarta" = c(-6.2088, 106.8456)
+  )
+  
+  if (!is.null(coords[[city]])) {
+    return(coords[[city]])
+  } else {
+    # Return country-level coordinates (simplified)
+    country_coords <- list(
+      "India" = c(20.5937, 78.9629),
+      "Japan" = c(36.2048, 138.2529),
+      "Singapore" = c(1.3521, 103.8198),
+      "South Korea" = c(35.9078, 127.7669),
+      "China" = c(35.8617, 104.1954),
+      "Taiwan" = c(23.5937, 121.0254)
+    )
+    return(country_coords[[country]] %||% c(NA_real_, NA_real_))
+  }
+}
+
+# Add coordinates to communities data
+communities_with_coords <- communities %>%
+  mutate(
+    coords = map2(city_state, country, ~get_coords(.x, .y)),
+    lat = map_dbl(coords, ~.x[1]),
+    lng = map_dbl(coords, ~.x[2])
+  )
+
+# Create region-level data for communities without specific coordinates
 region_data <- communities %>%
   group_by(region) %>%
   summarise(
     community_count = n(),
     community_list = paste(
       paste0("<b>", name, "</b><br>",
-             description, "<br>",
-             "<a href='", website, "' target='_blank'>Website</a>"),
+             description),
       collapse = "<br><br>"
     )
   ) %>%
   left_join(region_coords, by = "region")
 ```
 
-# Welcome to Asian Open Source Communities
+::: {.container .mt-6 .pt-6}
+# {.mb-4 .border-0}
 
+::: {.mb-5}
 This interactive database showcases open source communities across Asia. Use the filters below to explore communities by region, category, or search for specific communities.
+:::
 
-## Interactive Database
+## Interactive Database {.mt-5 .mb-4}
 
 ```{r}
 #| label: datatable
 #| output: html
 datatable(
-  communities,
+  display_communities,
   filter = 'top',
   options = list(
     pageLength = 10,
-    autoWidth = TRUE
+    autoWidth = FALSE,
+    scrollX = FALSE,
+    columnDefs = list(
+      list(width = '20%', targets = 0),  # name
+      list(width = '35%', targets = 1),  # description
+      list(width = '15%', targets = 2),  # website
+      list(width = '15%', targets = 3),  # region
+      list(width = '15%', targets = 4)   # category
+    )
   )
 )
 ```
 
-## Community Map
+## Community Map {.mt-5 .mb-4}
 
 ```{r}
 #| label: map
 #| output: html
 leaflet() %>%
-  addTiles() %>%
+  addProviderTiles("CartoDB.Positron") %>%
   setView(lng = 100, lat = 25, zoom = 4) %>%
+  # Add region markers
   addCircleMarkers(
     data = region_data,
     lng = ~lng,
     lat = ~lat,
     color = ~color,
-    radius = ~sqrt(community_count) * 10,
-    fillOpacity = 0.6,
+    radius = ~sqrt(community_count) * 8,
+    fillOpacity = 0.4,
     stroke = TRUE,
     weight = 2,
+    group = "Regions",
     popup = ~paste0(
       "<h4>", region, "</h4>",
       "<p><b>", community_count, " communities</b></p>",
@@ -85,16 +151,36 @@ leaflet() %>%
       "</div>"
     )
   ) %>%
+  # Add specific location markers
+  addCircleMarkers(
+    data = communities_with_coords %>% filter(!is.na(lat)),
+    lng = ~lng,
+    lat = ~lat,
+    radius = 6,
+    color = "#2c3e50",
+    fillOpacity = 0.8,
+    stroke = TRUE,
+    weight = 1,
+    group = "Communities",
+    popup = ~paste0(
+      "<h4>", name, "</h4>",
+      "<p>", description, "</p>"
+    )
+  ) %>%
   addLegend(
     position = "bottomright",
     colors = region_coords$color,
     labels = region_coords$region,
     title = "Regions",
     opacity = 0.7
+  ) %>%
+  addLayersControl(
+    overlayGroups = c("Regions", "Communities"),
+    options = layersControlOptions(collapsed = FALSE)
   )
 ```
 
-## How to Contribute
+## How to Contribute {.mt-5 .mb-4}
 
 We welcome new community submissions! To add your community:
 
@@ -102,4 +188,5 @@ We welcome new community submissions! To add your community:
 2. Fill in your community details
 3. Our team will review and add your community to the database
 
-For more details, see our [Contribution Guidelines](CONTRIBUTING.md). 
+For more details, see our [Contribution Guidelines](CONTRIBUTING.md).
+:::

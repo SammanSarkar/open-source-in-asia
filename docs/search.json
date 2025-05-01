@@ -2,37 +2,30 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Asian Open Source Communities",
+    "title": "Open Source Communities in Asia",
     "section": "",
-    "text": "This interactive database showcases open source communities across Asia. Use the filters below to explore communities by region, category, or search for specific communities.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWe welcome new community submissions! To add your community:\n\nCreate a GitHub Issue using our template\nFill in your community details\nOur team will review and add your community to the database\n\nFor more details, see our Contribution Guidelines."
+    "text": "This interactive database showcases open source communities across Asia. Use the filters below to explore communities by region, category, or search for specific communities.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWe welcome new community submissions! To add your community:\n\nCreate a GitHub Issue using our template\nFill in your community details\nOur team will review and add your community to the database\n\nFor more details, see our Contribution Guidelines."
+  },
+  {
+    "objectID": "index.html#interactive-database",
+    "href": "index.html#interactive-database",
+    "title": "Open Source Communities",
+    "section": "",
+    "text": "## Community Map {.mt-5 .mb-4}\n\n## How to Contribute {.mt-5 .mb-4}\n\n\n\n:::{#quarto-navigation-envelope .hidden}\n[Asian Open Source Communities]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLWludC1zaWRlYmFyLXRpdGxl\"}\n[Asian Open Source Communities]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLWludC1uYXZiYXItdGl0bGU=\"}\n[Home]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLWludC1uYXZiYXI6SG9tZQ==\"}\n[/index.html]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLWludC1uYXZiYXI6L2luZGV4Lmh0bWw=\"}\n[Communities]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLWludC1uYXZiYXI6Q29tbXVuaXRpZXM=\"}\n[/communities/index.html]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLWludC1uYXZiYXI6L2NvbW11bml0aWVzL2luZGV4Lmh0bWw=\"}\n[Contribute]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLWludC1uYXZiYXI6Q29udHJpYnV0ZQ==\"}\n[/CONTRIBUTING.md]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLWludC1uYXZiYXI6L0NPTlRSSUJVVElORy5tZA==\"}\n[https://github.com/SammanSarkar/open-source-in-asia]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLWludC1uYXZiYXI6aHR0cHM6Ly9naXRodWIuY29tL1NhbW1hblNhcmthci9vcGVuLXNvdXJjZS1pbi1hc2lh\"}\n[About]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLWludC1uYXZiYXI6QWJvdXQ=\"}\n[/about.html]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLWludC1uYXZiYXI6L2Fib3V0Lmh0bWw=\"}\n:::\n\n\n\n:::{#quarto-meta-markdown .hidden}\n[Asian Open Source Communities]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLW1ldGF0aXRsZQ==\"}\n[Asian Open Source Communities]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLXR3aXR0ZXJjYXJkdGl0bGU=\"}\n[Asian Open Source Communities]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLW9nY2FyZHRpdGxl\"}\n[Asian Open Source Communities]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLW1ldGFzaXRlbmFtZQ==\"}\n[]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLXR3aXR0ZXJjYXJkZGVzYw==\"}\n[]{.hidden .quarto-markdown-envelope-contents render-id=\"cXVhcnRvLW9nY2FyZGRkZXNj\"}\n:::\n\n\n\n\n&lt;!-- --&gt;\n\n::: {.quarto-embedded-source-code}\n```````````````````{.markdown shortcodes=\"false\"}\n---\ntitle: \"Open Source Communities\"\nformat: html\nexecute:\n  echo: false\n  warning: false\n  message: false\n---\n\nquarto-executable-code-5450563D\n\n```r\n#| label: setup\n#| include: false\nlibrary(tidyverse)\nlibrary(DT)\nlibrary(leaflet)\n\n# Read communities data\ncommunities &lt;- read_csv(\"data/communities.csv\")\n\n# Select display columns\ndisplay_communities &lt;- communities %&gt;%\n  select(name, description, website, region, category)\n\n# Define region coordinates with adjusted positions\nregion_coords &lt;- tribble(\n  ~region, ~lat, ~lng, ~color,\n  \"Eastern Asia\", 35.0, 115.0, \"#e74c3c\",  # Red\n  \"South-Eastern Asia\", 10.0, 106.0, \"#3498db\",  # Blue\n  \"Southern Asia\", 23.0, 80.0, \"#2ecc71\",  # Green\n  \"Western Asia\", 35.0, 40.0, \"#9b59b6\",  # Purple\n  \"Central Asia\", 45.0, 68.0, \"#f1c40f\"   # Yellow\n)\n\n# Create a geocoding function (simplified for major cities)\nget_coords &lt;- function(city, country) {\n  coords &lt;- list(\n    \"New Delhi\" = c(28.6139, 77.2090),\n    \"Mumbai\" = c(19.0760, 72.8777),\n    \"Bangalore\" = c(12.9716, 77.5946),\n    \"Tokyo\" = c(35.6762, 139.6503),\n    \"Singapore\" = c(1.3521, 103.8198),\n    \"Seoul\" = c(37.5665, 126.9780),\n    \"Hong Kong\" = c(22.3193, 114.1694),\n    \"Dubai\" = c(25.2048, 55.2708),\n    \"Taipei\" = c(25.0330, 121.5654),\n    \"Kolkata\" = c(22.5726, 88.3639),\n    \"Hyderabad\" = c(17.3850, 78.4867),\n    \"Chennai\" = c(13.0827, 80.2707),\n    \"Pune\" = c(18.5204, 73.8567),\n    \"Ahmedabad\" = c(23.0225, 72.5714),\n    \"Kochi\" = c(9.9312, 76.2673),\n    \"Lahore\" = c(31.5204, 74.3587),\n    \"Islamabad\" = c(33.6007, 73.0679),\n    \"Kathmandu\" = c(27.7172, 85.3240),\n    \"Abu Dhabi\" = c(24.4539, 54.3773),\n    \"Jakarta\" = c(-6.2088, 106.8456)\n  )\n  \n  if (!is.null(coords[[city]])) {\n    return(coords[[city]])\n  } else {\n    # Return country-level coordinates (simplified)\n    country_coords &lt;- list(\n      \"India\" = c(20.5937, 78.9629),\n      \"Japan\" = c(36.2048, 138.2529),\n      \"Singapore\" = c(1.3521, 103.8198),\n      \"South Korea\" = c(35.9078, 127.7669),\n      \"China\" = c(35.8617, 104.1954),\n      \"Taiwan\" = c(23.5937, 121.0254)\n    )\n    return(country_coords[[country]] %||% c(NA_real_, NA_real_))\n  }\n}\n\n# Add coordinates to communities data\ncommunities_with_coords &lt;- communities %&gt;%\n  mutate(\n    coords = map2(city_state, country, ~get_coords(.x, .y)),\n    lat = map_dbl(coords, ~.x[1]),\n    lng = map_dbl(coords, ~.x[2])\n  )\n\n# Create region-level data for communities without specific coordinates\nregion_data &lt;- communities %&gt;%\n  group_by(region) %&gt;%\n  summarise(\n    community_count = n(),\n    community_list = paste(\n      paste0(\"&lt;b&gt;\", name, \"&lt;/b&gt;&lt;br&gt;\",\n             description),\n      collapse = \"&lt;br&gt;&lt;br&gt;\"\n    )\n  ) %&gt;%\n  left_join(region_coords, by = \"region\")"
+  },
+  {
+    "objectID": "index.html#community-map",
+    "href": "index.html#community-map",
+    "title": "",
+    "section": "Community Map",
+    "text": "Community Map"
   },
   {
     "objectID": "index.html#how-to-contribute",
     "href": "index.html#how-to-contribute",
-    "title": "Asian Open Source Communities",
+    "title": "Open Source Communities in Asia",
     "section": "",
     "text": "We welcome new community submissions! To add your community:\n\nCreate a GitHub Issue using our template\nFill in your community details\nOur team will review and add your community to the database\n\nFor more details, see our Contribution Guidelines."
-  },
-  {
-    "objectID": "communities/index.html",
-    "href": "communities/index.html",
-    "title": "Communities",
-    "section": "",
-    "text": "Browse through our comprehensive list of open source communities across Asia. Use the filters below to find communities by region or category.\n\n\n\n\nCode\ndatatable(\n  communities,\n  filter = 'top',\n  options = list(\n    pageLength = 10,\n    autoWidth = TRUE\n  )\n)\n\n\n\n\n\n\n\n\n\nIf your community is not listed, you can add it by: 1. Creating a GitHub Issue using our template 2. Submitting a Pull Request with your community details\nSee our Contribution Guidelines for more information."
-  },
-  {
-    "objectID": "communities/index.html#community-directory",
-    "href": "communities/index.html#community-directory",
-    "title": "Communities",
-    "section": "",
-    "text": "Code\ndatatable(\n  communities,\n  filter = 'top',\n  options = list(\n    pageLength = 10,\n    autoWidth = TRUE\n  )\n)"
-  },
-  {
-    "objectID": "communities/index.html#how-to-add-your-community",
-    "href": "communities/index.html#how-to-add-your-community",
-    "title": "Communities",
-    "section": "",
-    "text": "If your community is not listed, you can add it by: 1. Creating a GitHub Issue using our template 2. Submitting a Pull Request with your community details\nSee our Contribution Guidelines for more information."
   },
   {
     "objectID": "about.html",
@@ -84,52 +77,73 @@
     "text": "This project is open source and available under the MIT License. See the LICENSE file for details."
   },
   {
-    "objectID": "CONTRIBUTING.html",
-    "href": "CONTRIBUTING.html",
-    "title": "",
+    "objectID": "communities/index.html",
+    "href": "communities/index.html",
+    "title": "Communities",
     "section": "",
-    "text": "Code"
+    "text": "Browse through our comprehensive list of open source communities across Asia. Use the filters below to find communities by region or category.\n\n\n\n\n\n\n\n\n\n\n\nIf your community is not listed, you can add it by: 1. Creating a GitHub Issue using our template 2. Submitting a Pull Request with your community details\nSee our Contribution Guidelines for more information."
   },
   {
-    "objectID": "CONTRIBUTING.html#adding-a-new-community",
-    "href": "CONTRIBUTING.html#adding-a-new-community",
-    "title": "",
-    "section": "Adding a New Community",
-    "text": "Adding a New Community\n\nOption 1: Create a GitHub Issue\n\nGo to the Issues tab\nClick “New Issue”\nSelect the “Community Submission” template\nFill in the following information:\n\nCommunity Name\nDescription (2-3 sentences about the community)\nWebsite URL\nRegion (e.g., East Asia, South Asia, Southeast Asia)\nCategory (e.g., Community, Conference, Association)\n\n\n\n\nOption 2: Submit a Pull Request\n\nFork the repository\nAdd your community to data/communities.csv following the format:\nname,description,website,region,category\nCreate a pull request with a clear description of your changes"
+    "objectID": "communities/index.html#how-to-add-your-community",
+    "href": "communities/index.html#how-to-add-your-community",
+    "title": "Communities",
+    "section": "",
+    "text": "If your community is not listed, you can add it by: 1. Creating a GitHub Issue using our template 2. Submitting a Pull Request with your community details\nSee our Contribution Guidelines for more information."
   },
   {
-    "objectID": "CONTRIBUTING.html#data-format-guidelines",
-    "href": "CONTRIBUTING.html#data-format-guidelines",
-    "title": "",
-    "section": "Data Format Guidelines",
-    "text": "Data Format Guidelines\n\nName: Official name of the community\nDescription: Brief description (2-3 sentences)\nWebsite: Full URL including https://\nRegion: One of: East Asia, South Asia, Southeast Asia, Central Asia\nCategory: One of: Community, Conference, Association, General"
+    "objectID": "index.html#interactive-database-1",
+    "href": "index.html#interactive-database-1",
+    "title": "Open Source Communities",
+    "section": "",
+    "text": "## Community Map {.mt-5 .mb-4}\n\n## How to Contribute {.mt-5 .mb-4}"
   },
   {
-    "objectID": "CONTRIBUTING.html#code-contributions",
-    "href": "CONTRIBUTING.html#code-contributions",
-    "title": "",
-    "section": "Code Contributions",
-    "text": "Code Contributions\nIf you’d like to contribute code:\n\nFork the repository\nCreate a new branch for your feature\nMake your changes\nSubmit a pull request"
+    "objectID": "contributing.html",
+    "href": "contributing.html",
+    "title": "Contributing",
+    "section": "",
+    "text": "Thank you for your interest in contributing to our database of Asian open source communities! This document provides guidelines for adding new communities and making other contributions.\n\n\n\n\n\nGo to the Issues tab\nClick “New Issue”\nSelect the “Community Submission” template\nFill in the following information:\n\nCommunity Name\nDescription (2-3 sentences about the community)\nWebsite URL\nRegion (e.g., East Asia, South Asia, Southeast Asia)\nCategory (e.g., Community, Conference, Association)\n\n\n\n\n\n\nFork the repository\nAdd your community to data/communities.csv following the format:\nname,description,website,region,category\nCreate a pull request with a clear description of your changes\n\n\n\n\n\n\nName: Official name of the community\nDescription: Brief description (2-3 sentences)\nWebsite: Full URL including https://\nRegion: One of: East Asia, South Asia, Southeast Asia, Central Asia\nCategory: One of: Community, Conference, Association, General\n\n\n\n\nIf you’d like to contribute code:\n\nFork the repository\nCreate a new branch for your feature\nMake your changes\nSubmit a pull request\n\n\n\n\n\nUse consistent formatting in the CSV file\nKeep descriptions concise but informative\nUse proper capitalization for community names\nEnsure all URLs are valid and accessible\n\n\n\n\nAll submissions will be reviewed by the maintainers. We may: - Request additional information - Suggest edits to the submission - Ask for clarification\n\n\n\nIf you have any questions about contributing, please open an issue or contact the maintainers."
   },
   {
-    "objectID": "CONTRIBUTING.html#style-guide",
-    "href": "CONTRIBUTING.html#style-guide",
-    "title": "",
-    "section": "Style Guide",
-    "text": "Style Guide\n\nUse consistent formatting in the CSV file\nKeep descriptions concise but informative\nUse proper capitalization for community names\nEnsure all URLs are valid and accessible"
+    "objectID": "contributing.html#adding-a-new-community",
+    "href": "contributing.html#adding-a-new-community",
+    "title": "Contributing",
+    "section": "",
+    "text": "Go to the Issues tab\nClick “New Issue”\nSelect the “Community Submission” template\nFill in the following information:\n\nCommunity Name\nDescription (2-3 sentences about the community)\nWebsite URL\nRegion (e.g., East Asia, South Asia, Southeast Asia)\nCategory (e.g., Community, Conference, Association)\n\n\n\n\n\n\nFork the repository\nAdd your community to data/communities.csv following the format:\nname,description,website,region,category\nCreate a pull request with a clear description of your changes"
   },
   {
-    "objectID": "CONTRIBUTING.html#review-process",
-    "href": "CONTRIBUTING.html#review-process",
-    "title": "",
-    "section": "Review Process",
-    "text": "Review Process\nAll submissions will be reviewed by the maintainers. We may: - Request additional information - Suggest edits to the submission - Ask for clarification"
+    "objectID": "contributing.html#data-format-guidelines",
+    "href": "contributing.html#data-format-guidelines",
+    "title": "Contributing",
+    "section": "",
+    "text": "Name: Official name of the community\nDescription: Brief description (2-3 sentences)\nWebsite: Full URL including https://\nRegion: One of: East Asia, South Asia, Southeast Asia, Central Asia\nCategory: One of: Community, Conference, Association, General"
   },
   {
-    "objectID": "CONTRIBUTING.html#questions",
-    "href": "CONTRIBUTING.html#questions",
-    "title": "",
-    "section": "Questions?",
-    "text": "Questions?\nIf you have any questions about contributing, please open an issue or contact the maintainers."
+    "objectID": "contributing.html#code-contributions",
+    "href": "contributing.html#code-contributions",
+    "title": "Contributing",
+    "section": "",
+    "text": "If you’d like to contribute code:\n\nFork the repository\nCreate a new branch for your feature\nMake your changes\nSubmit a pull request"
+  },
+  {
+    "objectID": "contributing.html#style-guide",
+    "href": "contributing.html#style-guide",
+    "title": "Contributing",
+    "section": "",
+    "text": "Use consistent formatting in the CSV file\nKeep descriptions concise but informative\nUse proper capitalization for community names\nEnsure all URLs are valid and accessible"
+  },
+  {
+    "objectID": "contributing.html#review-process",
+    "href": "contributing.html#review-process",
+    "title": "Contributing",
+    "section": "",
+    "text": "All submissions will be reviewed by the maintainers. We may: - Request additional information - Suggest edits to the submission - Ask for clarification"
+  },
+  {
+    "objectID": "contributing.html#questions",
+    "href": "contributing.html#questions",
+    "title": "Contributing",
+    "section": "",
+    "text": "If you have any questions about contributing, please open an issue or contact the maintainers."
   }
 ]
