@@ -1,0 +1,35 @@
+---
+title: "About"
+format: html
+---
+
+# About Asian Open Source Communities
+
+## Our Mission
+
+The Asian Open Source Communities database aims to connect and highlight the vibrant open source ecosystem across Asia. We believe in fostering collaboration, knowledge sharing, and community building within the Asian open source landscape.
+
+## Project Goals
+
+- Create a comprehensive directory of Asian open source communities
+- Facilitate connections between communities and contributors
+- Promote open source culture and collaboration in Asia
+- Document the growth and impact of open source in the region
+
+## Team
+
+This project is maintained by a group of open source enthusiasts passionate about the Asian open source ecosystem. We welcome contributions from anyone interested in supporting open source communities in Asia.
+
+## Acknowledgments
+
+We would like to thank all the communities and contributors who have helped build this database. Your participation makes this project possible.
+
+## Contact
+
+For general inquiries or to get involved:
+- Email: [contact@chaoss.asia](mailto:contact@chaoss.asia)
+- GitHub: [github.com/chaoss-asia/chaoss_Asia](https://github.com/chaoss-asia/chaoss_Asia)
+
+## License
+
+This project is open source and available under the MIT License. See the [LICENSE](LICENSE) file for details. 

@@ -1,0 +1,59 @@
+---
+title: "Asian Open Source Communities"
+format: html
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(DT)
+library(leaflet)
+
+# Read communities data
+communities <- read_csv("data/communities.csv")
+```
+
+# Welcome to Asian Open Source Communities
+
+This interactive database showcases open source communities across Asia. Use the filters below to explore communities by region, category, or search for specific communities.
+
+## Interactive Database
+
+```{r}
+#| label: datatable
+#| output: html
+datatable(
+  communities,
+  filter = 'top',
+  options = list(
+    pageLength = 10,
+    autoWidth = TRUE
+  )
+)
+```
+
+## Community Map
+
+```{r}
+#| label: map
+#| output: html
+# Note: This is a placeholder. You'll need to add geocoding data to make this work
+leaflet() %>%
+  addTiles() %>%
+  setView(lng = 100, lat = 20, zoom = 3)
+```
+
+## How to Contribute
+
+We welcome new community submissions! To add your community:
+
+1. Create a GitHub Issue using our template
+2. Fill in your community details
+3. Our team will review and add your community to the database
+
+For more details, see our [Contribution Guidelines](CONTRIBUTING.md). 

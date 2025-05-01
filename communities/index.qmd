@@ -1,0 +1,41 @@
+---
+title: "Communities"
+format: html
+---
+
+# Asian Open Source Communities
+
+Browse through our comprehensive list of open source communities across Asia. Use the filters below to find communities by region or category.
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(DT)
+
+# Read communities data
+communities <- read_csv("../data/communities.csv")
+```
+
+## Community Directory
+
+```{r}
+#| label: datatable
+#| output: html
+datatable(
+  communities,
+  filter = 'top',
+  options = list(
+    pageLength = 10,
+    autoWidth = TRUE
+  )
+)
+```
+
+## How to Add Your Community
+
+If your community is not listed, you can add it by:
+1. Creating a GitHub Issue using our template
+2. Submitting a Pull Request with your community details
+
+See our [Contribution Guidelines](../CONTRIBUTING.md) for more information. 

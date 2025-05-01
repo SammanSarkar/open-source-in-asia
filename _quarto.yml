@@ -1,0 +1,41 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Asian Open Source Communities"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Communities"
+        href: communities/index.qmd
+      - text: "Contribute"
+        href: CONTRIBUTING.md
+    right:
+      - icon: github
+        href: https://github.com/chaoss-asia/chaoss_Asia
+      - text: "About"
+        href: about.qmd
+  page-navigation: true
+  search: true
+  sidebar:
+    style: floating
+    collapse-level: 2
+
+format:
+  html:
+    theme: cosmo
+    css: 
+      - styles/custom.css
+      - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css
+    toc: true
+    code-fold: true
+    code-tools: true
+    navbar-bg: "#2c3e50"
+    navbar-fg: "#ffffff"
+    navbar-hl: "#3498db"
+    include-after-body: footer.html
+
+execute:
+  freeze: auto 
