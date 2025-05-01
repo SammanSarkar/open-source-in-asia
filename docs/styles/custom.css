@@ -8,6 +8,7 @@
   --text-color: #2c3e50;
   --navbar-height: 60px;
   --nav-text-color: rgba(255, 255, 255, 0.6);
+  --toc-text-color: rgba(44, 62, 80, 0.85);
 }
 
 body {
@@ -136,15 +137,44 @@ h1, h2, h3 {
 
 /* TOC Links */
 .toc a {
-  color: var(--text-color);
-  opacity: 0.7;
+  color: var(--toc-text-color) !important;
+  opacity: 0.9;
   transition: all 0.3s ease;
+  text-decoration: none !important;
 }
 
 .toc a:hover {
-  color: var(--primary-color);
+  color: var(--primary-color) !important;
   opacity: 1;
-  text-decoration: none;
+  text-decoration: none !important;
+  font-weight: 500;
+}
+
+/* Active TOC link */
+.toc .active a {
+  color: var(--primary-color) !important;
+  font-weight: 500;
+  opacity: 1;
+}
+
+/* TOC Heading Styles */
+.toc-section-number {
+  opacity: 0.6;
+  margin-right: 0.5rem;
+}
+
+/* Indent levels */
+.toc ul {
+  list-style: none;
+  padding-left: 1rem;
+}
+
+.toc > ul {
+  padding-left: 0;
+}
+
+.toc li {
+  margin: 0.5rem 0;
 }
 
 /* DataTable customization */
