@@ -91,7 +91,7 @@ main {
 /* Content Styling */
 h1, h2, h3 {
   color: var(--primary-color);
-  font-weight: normal;
+  font-weight: 600;
 }
 
 h1 {

@@ -1,0 +1,18 @@
+/* Title spacing fixes */
+#title-block-header {
+  margin-bottom: 0 !important;
+  padding-top: 30px !important; /* Add padding at top of title block */
+}
+
+.quarto-title {
+  margin-bottom: 0 !important;
+}
+
+.quarto-title-block {
+  margin-bottom: -35px !important; /* Pull content up closer to title */
+}
+
+/* Fix bold for section headings */
+h2 {
+  font-weight: 600 !important;
+} 
