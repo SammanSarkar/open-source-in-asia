@@ -4,7 +4,6 @@ project:
   render:
     - "*.qmd"
     - "!templates/"
-    - "contributing.qmd"
   preview:
     port: 4200
     browser: true
@@ -32,7 +31,7 @@ website:
         text: Home
       - href: communities/index.qmd
         text: Communities
-      - href: contributing.qmd
+      - href: contribute.qmd
         text: Contribute
     right:
       - icon: github
