@@ -1,10 +1,17 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - CNAME
+    - .nojekyll
 
 website:
   title: "Asian Open Source Communities"
+  site-url: "https://chaoss-asia.github.io/chaoss_Asia"
+  repo-url: "https://github.com/chaoss-asia/chaoss_Asia"
+  repo-actions: [edit, issue]
   navbar:
+    background: "#2c3e50"
     left:
       - text: "Home"
         href: index.qmd
@@ -32,10 +39,14 @@ format:
     toc: true
     code-fold: true
     code-tools: true
-    navbar-bg: "#2c3e50"
-    navbar-fg: "#ffffff"
-    navbar-hl: "#3498db"
     include-after-body: footer.html
+    mainfont: "Segoe UI, system-ui, -apple-system, sans-serif"
+    highlight-style: github
+    html-math-method: katex
+    self-contained: false
+    smooth-scroll: true
+    citations-hover: true
+    footnotes-hover: true
 
 execute:
   freeze: auto 
