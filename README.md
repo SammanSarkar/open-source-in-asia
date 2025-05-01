@@ -40,7 +40,7 @@ To add a new community to the database, you have two options:
 Communities are stored in CSV format with the following structure:
 
 ```csv
-name,description,website,region,category
+name,description,website,region,category,country,city_state,member_count,status,type
 ```
 
 ## Development
