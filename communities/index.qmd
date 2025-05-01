@@ -50,4 +50,4 @@ If your community is not listed, you can add it by:
 1. Creating a GitHub Issue using our template
 2. Submitting a Pull Request with your community details
 
-See our [Contribution Guidelines](../CONTRIBUTING.md) for more information. 
+See our [Contribution Guidelines](../contribute.html) for more information. 

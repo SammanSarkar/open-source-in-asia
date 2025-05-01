@@ -3,7 +3,7 @@ title: "Contributing"
 format: html
 ---
 
-# Contributing to Asian Open Source Communities
+# Contributing to Open Source Communities in Asia
 
 Thank you for your interest in contributing to our database of Asian open source communities! This document provides guidelines for adding new communities and making other contributions.
 
@@ -11,7 +11,7 @@ Thank you for your interest in contributing to our database of Asian open source
 
 ### Option 1: Create a GitHub Issue
 
-1. Go to the [Issues](https://github.com/yourusername/asian-oss-communities/issues) tab
+1. Go to the [Issues](https://github.com/SammanSarkar/open-source-in-asia/issues) tab
 2. Click "New Issue"
 3. Select the "Community Submission" template
 4. Fill in the following information:
@@ -26,7 +26,7 @@ Thank you for your interest in contributing to our database of Asian open source
 1. Fork the repository
 2. Add your community to `data/communities.csv` following the format:
    ```csv
-   name,description,website,region,category
+   name,description,website,region,category,country,city_state,member_count,status,type
    ```
 3. Create a pull request with a clear description of your changes
 
@@ -63,4 +63,4 @@ All submissions will be reviewed by the maintainers. We may:
 
 ## Questions?
 
-If you have any questions about contributing, please open an issue or contact the maintainers. 
+If you have any questions about contributing, please [open an issue](https://github.com/SammanSarkar/open-source-in-asia/issues) or contact the maintainers. 
