@@ -3,22 +3,22 @@ title: "Contributing"
 format: html
 ---
 
-# Contributing to Open Source Communities in Asia
+# Contributing to Open Source Communities
 
-Thank you for your interest in contributing to our database of Asian open source communities! This document provides guidelines for adding new communities and making other contributions.
+Thank you for your interest in contributing to our database of open source communities! This document provides guidelines for adding new communities and making other contributions.
 
 ## Adding a New Community
 
 ### Option 1: Create a GitHub Issue
 
-1. Go to the [Issues](https://github.com/SammanSarkar/open-source-in-asia/issues) tab
+1. Go to the [Issues](https://github.com/chaoss/chaoss-asia/issues) tab
 2. Click "New Issue"
 3. Select the "Community Submission" template
 4. Fill in the following information:
    - Community Name
    - Description (2-3 sentences about the community)
    - Website URL
-   - Region (e.g., East Asia, South Asia, Southeast Asia)
+   - Region (e.g., Europe, Americas, Africa, Asia)
    - Category (e.g., Community, Conference, Association)
 
 ### Option 2: Submit a Pull Request
@@ -35,7 +35,7 @@ Thank you for your interest in contributing to our database of Asian open source
 - **Name**: Official name of the community
 - **Description**: Brief description (2-3 sentences)
 - **Website**: Full URL including https://
-- **Region**: One of: East Asia, South Asia, Southeast Asia, Central Asia
+- **Region**: One of the supported regions in the dataset
 - **Category**: One of: Community, Conference, Association, General
 
 ## Code Contributions
@@ -63,4 +63,4 @@ All submissions will be reviewed by the maintainers. We may:
 
 ## Questions?
 
-If you have any questions about contributing, please [open an issue](https://github.com/SammanSarkar/open-source-in-asia/issues) or contact the maintainers. 
+If you have any questions about contributing, please [open an issue](https://github.com/chaoss/chaoss-asia/issues) or contact the maintainers. 

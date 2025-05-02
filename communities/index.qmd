@@ -3,22 +3,28 @@ title: "Communities"
 format: html
 ---
 
-# Asian Open Source Communities
+# Open Source Communities
 
-Browse through our comprehensive list of open source communities across Asia. Use the filters below to find communities by region or category.
+Browse through our comprehensive list of open source communities. Use the filters below to find communities by region or category.
 
 ```{r}
 #| label: setup
 #| include: false
 library(tidyverse)
 library(DT)
+library(htmltools)
 
 # Read communities data
 communities <- read_csv("../data/communities.csv")
 
 # Select only the columns we want to display
 display_communities <- communities %>%
-  select(name, description, website, region, category)
+  select(name, description, website, region, category, format)
+
+# Create format options for filtering
+format_options <- communities %>%
+  distinct(format) %>%
+  pull()
 ```
 
 ## Community Directory
@@ -28,18 +34,39 @@ display_communities <- communities %>%
 #| output: html
 datatable(
   display_communities,
-  filter = 'top',
+  filter = list(
+    position = "top",
+    clear = FALSE,
+    plain = FALSE
+  ),
   options = list(
     pageLength = 10,
     autoWidth = FALSE,
     scrollX = FALSE,
     columnDefs = list(
       list(width = '20%', targets = 0),  # name
-      list(width = '35%', targets = 1),  # description
+      list(width = '30%', targets = 1),  # description
       list(width = '15%', targets = 2),  # website
-      list(width = '15%', targets = 3),  # region
-      list(width = '15%', targets = 4)   # category
-    )
+      list(width = '12%', targets = 3),  # region
+      list(width = '13%', targets = 4),  # category
+      list(width = '10%', targets = 5)   # format
+    ),
+    # Custom filter for the format column
+    initComplete = JS("
+      function(settings, json) {
+        var table = this.api();
+        
+        // Create select filter for format column (6th column, index 5)
+        var formatColumn = table.column(5);
+        var formatSelect = $('<select><option value=\"\">All</option><option value=\"in-person\">In-Person</option><option value=\"virtual\">Virtual</option><option value=\"hybrid\">Hybrid</option></select>')
+          .appendTo($(formatColumn.header()).closest('tr').siblings('.filters').children().eq(5).empty())
+          .on('change', function() {
+            formatColumn
+              .search($(this).val() ? '^' + $(this).val() + '$' : '', true, false)
+              .draw();
+          });
+      }
+    ")
   )
 )
 ```
@@ -50,4 +77,4 @@ If your community is not listed, you can add it by:
 1. Creating a GitHub Issue using our template
 2. Submitting a Pull Request with your community details
 
-See our [Contribution Guidelines](../contribute.html) for more information. 
+See our [Contribution Guidelines](../contribute.html) for more information.

@@ -19,7 +19,7 @@ execute:
   message: false
 
 website:
-  title: "Asian Open Source Communities"
+  title: "Open Source Communities"
   site-url: "https://sammansarkar.github.io/open-source-in-asia"
   repo-url: "https://github.com/SammanSarkar/open-source-in-asia"
   repo-actions: [edit, issue]
@@ -33,12 +33,12 @@ website:
         text: Communities
       - href: contribute.qmd
         text: Contribute
-    right:
-      - icon: github
-        href: https://github.com/SammanSarkar/open-source-in-asia
-        aria-label: GitHub
       - href: about.qmd
         text: About
+    right:
+      - icon: github
+        href: https://github.com/chaoss/chaoss-asia/
+        aria-label: GitHub
   page-navigation: true
 
 format:
