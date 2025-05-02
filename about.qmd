@@ -28,8 +28,4 @@ We would like to thank all the communities and contributors who have helped buil
 
 For general inquiries or to get involved:
 - Email: [chaossasia@gmail.com](mailto:chaossasia@gmail.com)
-- GitHub: [github.com/chaoss/chaoss-asia](https://github.com/chaoss/chaoss-asia/)
-
-## License
-
-This project is open source and available under the MIT License. See the [LICENSE](LICENSE) file for details. 
+- GitHub: [github.com/chaoss/chaoss-asia](https://github.com/chaoss/chaoss-asia/) 

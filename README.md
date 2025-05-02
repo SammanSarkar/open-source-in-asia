@@ -1,6 +1,6 @@
-# Asian Open Source Communities Database
+# Open Source Communities Database
 
-An interactive database showcasing open source communities across Asia. This project aims to connect and highlight the vibrant open source ecosystem in the Asian region.
+An interactive database showcasing open source communities worldwide. This project aims to connect and highlight vibrant open source ecosystems from around the globe.
 
 ## Project Structure
 
@@ -29,6 +29,7 @@ To add a new community to the database, you have two options:
    - Website
    - Region
    - Category
+   - Format (in-person/virtual/hybrid)
 
 ### Option 2: Submit a Pull Request
 1. Fork the repository
@@ -40,21 +41,39 @@ To add a new community to the database, you have two options:
 Communities are stored in CSV format with the following structure:
 
 ```csv
-name,description,website,region,category,country,city_state,member_count,status,type
+name,description,website,region,category,country,city_state,member_count,status,type,format
 ```
 
-## Development
+## Development and Installation
 
 This project uses:
+- R and various R packages for data processing
 - Quarto for website generation
 - GitHub Pages for hosting
 - CSV for data storage
 
-To run locally:
-1. Install Quarto: https://quarto.org/docs/get-started/
-2. Clone this repository
-3. Run `quarto preview` to view the site locally
+### Prerequisites
 
-## License
+1. Install R from the [R Project website](https://www.r-project.org/)
+2. Install Quarto: [https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
 
-This project is open source and available under the MIT License. 
+### Installation Steps
+
+1. Clone this repository
+   ```bash
+   git clone https://github.com/SammanSarkar/open-source-in-asia.git
+   cd open-source-in-asia
+   ```
+
+2. Install required R packages
+   ```bash
+   Rscript requirements.R
+   ```
+   This will install the necessary R packages including tidyverse, DT, leaflet, and others.
+
+3. Run the site locally
+   ```bash
+   quarto preview
+   ```
+
+4. The site should open in your default browser at `http://localhost:4200`
